@@ -8,7 +8,16 @@ The project is named `laservigil` (display name **Laservigil**). The runtime nam
 
 Python packaging and import paths can't read that constant, so the name also
 appears in the places below. This list was checked with
-`grep -rniI laservigil --exclude-dir=.git .` (case-insensitive, so it catches `LASERVIGIL` too).
+`grep -rniI laservigil --exclude-dir=.git .` (case-insensitive, so it catches
+every casing).
+
+The name appears in three casings, and each one needs its own replacement:
+
+| Casing | Example | Where |
+| --- | --- | --- |
+| lowercase `laservigil` | `NAME = "laservigil"`, `python -m laservigil` | code, config, tests, CLI usage, paths |
+| capitalised `Laservigil` | `# Laservigil` | display name in README prose |
+| uppercase `LASERVIGIL` | `// LASERVIGIL :: ...` | sample banner output in README |
 
 ## Code and config (must change)
 
@@ -45,11 +54,30 @@ The source modules inside the package use relative imports, so they don't contai
 
 ## Rename recipe
 
+`NEW` must be lowercase and a valid Python identifier (it becomes the import
+name). The capitalised and uppercase forms are derived from it.
+
 ```sh
 NEW=newname
-mv src/laservigil src/$NEW
-grep -rlI laservigil --exclude-dir=.git . | xargs sed -i "s/laservigil/$NEW/g; s/LASERVIGIL/$(echo $NEW | tr a-z A-Z)/g"
+NEW_CAP="$(printf '%s' "$NEW" | cut -c1 | tr '[:lower:]' '[:upper:]')$(printf '%s' "$NEW" | cut -c2-)"
+NEW_UPPER="$(printf '%s' "$NEW" | tr '[:lower:]' '[:upper:]')"
+git mv src/laservigil "src/$NEW"
+grep -rliI laservigil --exclude-dir=.git . | xargs sed -i \
+  -e "s/laservigil/$NEW/g" \
+  -e "s/Laservigil/$NEW_CAP/g" \
+  -e "s/LASERVIGIL/$NEW_UPPER/g"
 python3 -m pytest -q
 ```
 
-Afterwards, check that `grep -rniI laservigil --exclude-dir=.git .` returns nothing.
+The `grep -i` is what makes sure files that only contain `Laservigil` or
+`LASERVIGIL` are picked up. On macOS/BSD use `sed -i ''` instead of `sed -i`.
+
+## Checklist
+
+- [ ] `src/laservigil/` directory renamed
+- [ ] lowercase: `grep -rnI laservigil --exclude-dir=.git .` returns nothing
+- [ ] capitalised: `grep -rnI Laservigil --exclude-dir=.git .` returns nothing
+- [ ] uppercase: `grep -rnI LASERVIGIL --exclude-dir=.git .` returns nothing
+- [ ] any casing: `grep -rniI laservigil --exclude-dir=.git .` returns nothing
+  (also catches any mixed casing, which the recipe does not replace)
+- [ ] `python3 -m pytest -q` passes and `python3 -m <newname> --version` prints the new name

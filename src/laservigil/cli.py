@@ -60,8 +60,8 @@ def _render(findings: list[Finding], scanned: int, pal: Palette, out: TextIO) ->
 
 
 def cmd_scan(args: argparse.Namespace, out: TextIO, err: TextIO) -> int:
-    fetcher = _make_fetcher(args)
     try:
+        fetcher = _make_fetcher(args)
         mod_ids = list(args.mods) or list(fetcher.list_mods())
         findings: list[Finding] = []
         for mod_id in mod_ids:

@@ -68,6 +68,24 @@ def test_missing_fixture_is_an_error():
     assert code == 2 and "nope" in err
 
 
+def test_missing_fixture_dir_is_an_error(tmp_path):
+    missing = tmp_path / "nope"
+    code, out, err = run(["scan", "--fixtures", str(missing)])
+    assert code == 2
+    assert out == ""
+    assert err.startswith(f"{NAME}: fixture directory not found")
+    assert "Traceback" not in err
+
+
+def test_fixture_path_not_a_directory_is_an_error(tmp_path):
+    file = tmp_path / "file.json"
+    file.write_text("{}", encoding="utf-8")
+    code, out, err = run(["scan", "--fixtures", str(file), "laser-grid"])
+    assert code == 2
+    assert out == ""
+    assert err.startswith(f"{NAME}: fixture path is not a directory")
+
+
 def test_version(capsys):
     try:
         main(["--version"])

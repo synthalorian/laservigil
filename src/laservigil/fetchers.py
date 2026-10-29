@@ -21,10 +21,18 @@ class ModFetcher(Protocol):
 
 
 class FixtureFetcher:
-    """Reads ModPage data from ``<directory>/<mod_id>.json``. Never touches the network."""
+    """Reads ModPage data from ``<directory>/<mod_id>.json``. Never touches the network.
+
+    Raises ``FileNotFoundError`` if ``directory`` does not exist and
+    ``NotADirectoryError`` if it exists but is not a directory.
+    """
 
     def __init__(self, directory: str | Path, source: str = "fixture") -> None:
         self.directory = Path(directory)
+        if not self.directory.exists():
+            raise FileNotFoundError(f"fixture directory not found: {self.directory}")
+        if not self.directory.is_dir():
+            raise NotADirectoryError(f"fixture path is not a directory: {self.directory}")
         self.source = source
 
     def list_mods(self) -> list[str]:

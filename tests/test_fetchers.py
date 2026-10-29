@@ -33,3 +33,16 @@ def test_live_fetchers_are_stubs(cls):
         cls().fetch("anything")
     with pytest.raises(NotImplementedError):
         cls().list_mods()
+
+
+def test_fixture_fetcher_missing_directory(tmp_path):
+    missing = tmp_path / "nope"
+    with pytest.raises(FileNotFoundError, match="fixture directory not found"):
+        FixtureFetcher(missing)
+
+
+def test_fixture_fetcher_path_is_not_a_directory(tmp_path):
+    file = tmp_path / "file.json"
+    file.write_text("{}", encoding="utf-8")
+    with pytest.raises(NotADirectoryError, match="not a directory"):
+        FixtureFetcher(file)
