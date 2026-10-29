@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "laservigil"
+dynamic = ["version"]
+description = "Watch Nexus Mods and GitHub mod pages for unanswered messages, permission requests and broken dependencies."
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.10"
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest>=7"]
+
+[project.scripts]
+laservigil = "laservigil.cli:main"
+
+[tool.setuptools.dynamic]
+version = { attr = "laservigil._meta.VERSION" }
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]

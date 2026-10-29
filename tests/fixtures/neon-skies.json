@@ -1,0 +1,22 @@
+{
+  "source": "nexus",
+  "mod_id": "neon-skies",
+  "title": "Neon Skies Weather Overhaul",
+  "owner": "chromewave",
+  "messages": [
+    {"id": "m-1", "author": "gridrunner", "body": "Crash on load with v2.1?", "replies": []},
+    {"id": "m-2", "author": "pixelvapor", "body": "Thanks for the update!", "replies": [{"author": "chromewave"}]}
+  ],
+  "comments": [
+    {"id": "c-10", "author": "retrofox", "body": "Does this work with the night patch?", "replies": [{"author": "gridrunner"}]},
+    {"id": "c-11", "author": "chromewave", "body": "Pinned: read the FAQ first.", "replies": []}
+  ],
+  "permission_requests": [
+    {"id": "p-7", "requester": "synthcrafter", "asset": "sky textures", "status": "pending"},
+    {"id": "p-8", "requester": "outrun99", "asset": "cloud meshes", "status": "granted"}
+  ],
+  "dependencies": [
+    {"name": "Core Script Extender", "status": "ok", "url": "https://example.invalid/cse"},
+    {"name": "Old Weather Lib", "status": "removed", "url": "https://example.invalid/owl"}
+  ]
+}

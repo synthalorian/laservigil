@@ -1,0 +1,15 @@
+{
+  "source": "github",
+  "mod_id": "laser-grid",
+  "title": "Laser Grid HUD",
+  "owner": "vectorqueen",
+  "messages": [],
+  "comments": [
+    {"id": "issue-42", "author": "vectorqueen", "body": "Roadmap thread", "replies": []},
+    {"id": "issue-43", "author": "midnightdrive", "body": "HUD scale broken at 4K", "replies": [{"author": "vectorqueen"}]}
+  ],
+  "permission_requests": [],
+  "dependencies": [
+    {"name": "ui-toolkit", "status": "ok"}
+  ]
+}
