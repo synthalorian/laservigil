@@ -1,3 +1,5 @@
+<p align="center"><img src=".github/assets/laservigil-banner.png" alt="laservigil banner" width="100%"></p>
+
 # Laservigil
 
 > **The neon-lit sentinel for your mod pages.** 🌆
